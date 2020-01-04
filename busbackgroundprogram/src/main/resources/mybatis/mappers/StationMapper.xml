@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mashensoft.bus.mapper.StationMapper" >
+  <resultMap id="BaseResultMap" type="com.mashensoft.bus.model.Station" >
+    <id column="station_id" property="stationId" jdbcType="INTEGER" />
+    <result column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
+    <result column="station_type" property="stationType" jdbcType="VARCHAR" />
+    <result column="station_remark" property="stationRemark" jdbcType="VARCHAR" />
+    <result column="station_time" property="stationTime" jdbcType="VARCHAR" />
+    <result column="sort_number" property="sortNumber" jdbcType="INTEGER" />
+    <result column="get_on_off" property="getOnOff" jdbcType="INTEGER" />
+    <result column="line_bus_id" property="lineBusId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    station_id, line_id, station_name, station_type, station_remark, station_time, sort_number, 
+    get_on_off, line_bus_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mashensoft.bus.model.StationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from station
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from station
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from station
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mashensoft.bus.model.StationExample" >
+    delete from station
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mashensoft.bus.model.Station" >
+    insert into station (station_id, line_id, station_name, 
+      station_type, station_remark, station_time, 
+      sort_number, get_on_off, line_bus_id
+      )
+    values (#{stationId,jdbcType=INTEGER}, #{lineId,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, 
+      #{stationType,jdbcType=VARCHAR}, #{stationRemark,jdbcType=VARCHAR}, #{stationTime,jdbcType=VARCHAR}, 
+      #{sortNumber,jdbcType=INTEGER}, #{getOnOff,jdbcType=INTEGER}, #{lineBusId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashensoft.bus.model.Station" >
+    insert into station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="stationName != null" >
+        station_name,
+      </if>
+      <if test="stationType != null" >
+        station_type,
+      </if>
+      <if test="stationRemark != null" >
+        station_remark,
+      </if>
+      <if test="stationTime != null" >
+        station_time,
+      </if>
+      <if test="sortNumber != null" >
+        sort_number,
+      </if>
+      <if test="getOnOff != null" >
+        get_on_off,
+      </if>
+      <if test="lineBusId != null" >
+        line_bus_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationId != null" >
+        #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="lineId != null" >
+        #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationType != null" >
+        #{stationType,jdbcType=VARCHAR},
+      </if>
+      <if test="stationRemark != null" >
+        #{stationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="stationTime != null" >
+        #{stationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null" >
+        #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="getOnOff != null" >
+        #{getOnOff,jdbcType=INTEGER},
+      </if>
+      <if test="lineBusId != null" >
+        #{lineBusId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mashensoft.bus.model.StationExample" resultType="java.lang.Integer" >
+    select count(*) from station
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update station
+    <set >
+      <if test="record.stationId != null" >
+        station_id = #{record.stationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineId != null" >
+        line_id = #{record.lineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stationName != null" >
+        station_name = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationType != null" >
+        station_type = #{record.stationType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationRemark != null" >
+        station_remark = #{record.stationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationTime != null" >
+        station_time = #{record.stationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortNumber != null" >
+        sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.getOnOff != null" >
+        get_on_off = #{record.getOnOff,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineBusId != null" >
+        line_bus_id = #{record.lineBusId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update station
+    set station_id = #{record.stationId,jdbcType=INTEGER},
+      line_id = #{record.lineId,jdbcType=INTEGER},
+      station_name = #{record.stationName,jdbcType=VARCHAR},
+      station_type = #{record.stationType,jdbcType=VARCHAR},
+      station_remark = #{record.stationRemark,jdbcType=VARCHAR},
+      station_time = #{record.stationTime,jdbcType=VARCHAR},
+      sort_number = #{record.sortNumber,jdbcType=INTEGER},
+      get_on_off = #{record.getOnOff,jdbcType=INTEGER},
+      line_bus_id = #{record.lineBusId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashensoft.bus.model.Station" >
+    update station
+    <set >
+      <if test="lineId != null" >
+        line_id = #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationType != null" >
+        station_type = #{stationType,jdbcType=VARCHAR},
+      </if>
+      <if test="stationRemark != null" >
+        station_remark = #{stationRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="stationTime != null" >
+        station_time = #{stationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNumber != null" >
+        sort_number = #{sortNumber,jdbcType=INTEGER},
+      </if>
+      <if test="getOnOff != null" >
+        get_on_off = #{getOnOff,jdbcType=INTEGER},
+      </if>
+      <if test="lineBusId != null" >
+        line_bus_id = #{lineBusId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashensoft.bus.model.Station" >
+    update station
+    set line_id = #{lineId,jdbcType=INTEGER},
+      station_name = #{stationName,jdbcType=VARCHAR},
+      station_type = #{stationType,jdbcType=VARCHAR},
+      station_remark = #{stationRemark,jdbcType=VARCHAR},
+      station_time = #{stationTime,jdbcType=VARCHAR},
+      sort_number = #{sortNumber,jdbcType=INTEGER},
+      get_on_off = #{getOnOff,jdbcType=INTEGER},
+      line_bus_id = #{lineBusId,jdbcType=INTEGER}
+    where station_id = #{stationId,jdbcType=INTEGER}
+  </update>
+</mapper>

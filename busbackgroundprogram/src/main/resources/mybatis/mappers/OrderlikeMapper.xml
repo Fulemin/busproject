@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mashensoft.bus.mapper.OrderlikeMapper" >
+  <resultMap id="BaseResultMap" type="com.mashensoft.bus.model.Orderlike" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="bus_id" property="busId" jdbcType="INTEGER" />
+    <result column="line_origin" property="lineOrigin" jdbcType="VARCHAR" />
+    <result column="line_destination" property="lineDestination" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="line_time" property="lineTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, bus_id, line_origin, line_destination, create_time, user_id, line_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mashensoft.bus.model.OrderlikeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderlike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderlike
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderlike
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mashensoft.bus.model.OrderlikeExample" >
+    delete from orderlike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mashensoft.bus.model.Orderlike" >
+    <selectKey resultType="java.lang.Integer" keyProperty="orderId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into orderlike (bus_id, line_origin, line_destination, 
+      create_time, user_id, line_time
+      )
+    values (#{busId,jdbcType=INTEGER}, #{lineOrigin,jdbcType=VARCHAR}, #{lineDestination,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{lineTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashensoft.bus.model.Orderlike" >
+    <selectKey resultType="java.lang.Integer" keyProperty="orderId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into orderlike
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="busId != null" >
+        bus_id,
+      </if>
+      <if test="lineOrigin != null" >
+        line_origin,
+      </if>
+      <if test="lineDestination != null" >
+        line_destination,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="lineTime != null" >
+        line_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="busId != null" >
+        #{busId,jdbcType=INTEGER},
+      </if>
+      <if test="lineOrigin != null" >
+        #{lineOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="lineDestination != null" >
+        #{lineDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lineTime != null" >
+        #{lineTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mashensoft.bus.model.OrderlikeExample" resultType="java.lang.Integer" >
+    select count(*) from orderlike
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderlike
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.busId != null" >
+        bus_id = #{record.busId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineOrigin != null" >
+        line_origin = #{record.lineOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineDestination != null" >
+        line_destination = #{record.lineDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lineTime != null" >
+        line_time = #{record.lineTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderlike
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      bus_id = #{record.busId,jdbcType=INTEGER},
+      line_origin = #{record.lineOrigin,jdbcType=VARCHAR},
+      line_destination = #{record.lineDestination,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      line_time = #{record.lineTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashensoft.bus.model.Orderlike" >
+    update orderlike
+    <set >
+      <if test="busId != null" >
+        bus_id = #{busId,jdbcType=INTEGER},
+      </if>
+      <if test="lineOrigin != null" >
+        line_origin = #{lineOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="lineDestination != null" >
+        line_destination = #{lineDestination,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lineTime != null" >
+        line_time = #{lineTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashensoft.bus.model.Orderlike" >
+    update orderlike
+    set bus_id = #{busId,jdbcType=INTEGER},
+      line_origin = #{lineOrigin,jdbcType=VARCHAR},
+      line_destination = #{lineDestination,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      line_time = #{lineTime,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mashensoft.bus.mapper.UptownMapper" >
+  <resultMap id="BaseResultMap" type="com.mashensoft.bus.model.Uptown" >
+    <id column="uptown_id" property="uptownId" jdbcType="INTEGER" />
+    <result column="uptown_name" property="uptownName" jdbcType="VARCHAR" />
+    <result column="is_hot" property="isHot" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uptown_id, uptown_name, is_hot
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mashensoft.bus.model.UptownExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from uptown
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from uptown
+    where uptown_id = #{uptownId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from uptown
+    where uptown_id = #{uptownId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mashensoft.bus.model.UptownExample" >
+    delete from uptown
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mashensoft.bus.model.Uptown" >
+    insert into uptown (uptown_id, uptown_name, is_hot
+      )
+    values (#{uptownId,jdbcType=INTEGER}, #{uptownName,jdbcType=VARCHAR}, #{isHot,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashensoft.bus.model.Uptown" >
+    insert into uptown
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uptownId != null" >
+        uptown_id,
+      </if>
+      <if test="uptownName != null" >
+        uptown_name,
+      </if>
+      <if test="isHot != null" >
+        is_hot,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uptownId != null" >
+        #{uptownId,jdbcType=INTEGER},
+      </if>
+      <if test="uptownName != null" >
+        #{uptownName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null" >
+        #{isHot,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mashensoft.bus.model.UptownExample" resultType="java.lang.Integer" >
+    select count(*) from uptown
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update uptown
+    <set >
+      <if test="record.uptownId != null" >
+        uptown_id = #{record.uptownId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uptownName != null" >
+        uptown_name = #{record.uptownName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHot != null" >
+        is_hot = #{record.isHot,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update uptown
+    set uptown_id = #{record.uptownId,jdbcType=INTEGER},
+      uptown_name = #{record.uptownName,jdbcType=VARCHAR},
+      is_hot = #{record.isHot,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashensoft.bus.model.Uptown" >
+    update uptown
+    <set >
+      <if test="uptownName != null" >
+        uptown_name = #{uptownName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null" >
+        is_hot = #{isHot,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uptown_id = #{uptownId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashensoft.bus.model.Uptown" >
+    update uptown
+    set uptown_name = #{uptownName,jdbcType=VARCHAR},
+      is_hot = #{isHot,jdbcType=VARCHAR}
+    where uptown_id = #{uptownId,jdbcType=INTEGER}
+  </update>
+</mapper>

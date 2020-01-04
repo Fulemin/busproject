@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.mashensoft.bus.model" />
+    </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--helperDialect 方言:就表示此插件针对哪个数据库进行优化处理
+            这个方言可以不配置,因为此插件可以依据你的 url 的信息来推断出
+            你用的数据库是哪一个
+            -->
+            <property name="helperDialect" value="mysql"/>
+            <!--分页合理化参数-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+</configuration>
